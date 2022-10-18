@@ -1,0 +1,6 @@
+00_disable-local-port-reuse-tests.patch
+01_use_ca-certificates.patch
+03_remove_rubygems_bundler_add_requires_from_gemspec.patch
+04_gemspec-don-t-reference-lib-directory-explicitly.patch
+test_long_life_certs.patch
+test-always-run-current-ruby-interpreter.patch

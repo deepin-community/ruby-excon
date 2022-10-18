@@ -1,0 +1,23 @@
+From: Antonio Terceiro <terceiro@debian.org>
+Date: Sun, 7 Feb 2021 13:08:33 -0300
+Subject: gemspec: don't reference lib directory explicitly
+
+This makes loading the gemspec (for checking dependencies) under
+autopkgtest work.
+
+Forwarded: not-needed
+---
+ excon.gemspec | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/excon.gemspec b/excon.gemspec
+index 80860c5..161eb9b 100644
+--- a/excon.gemspec
++++ b/excon.gemspec
+@@ -1,4 +1,5 @@
+-require File.join(File.dirname(__FILE__), 'lib', 'excon', 'version')
++$LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
++require 'excon/version'
+ 
+ Gem::Specification.new do |s|
+   s.name             = 'excon'

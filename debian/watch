@@ -1,0 +1,6 @@
+version=3
+
+# gem releases doesn't contains tests files, use github instead
+opts=uversionmangle=s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha|b|a)\d*)$/$1~$2/,\
+filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/faraday-$1\.tar\.gz/ \
+  https://github.com/excon/excon/tags .*/v?(\d\S*)\.tar\.gz

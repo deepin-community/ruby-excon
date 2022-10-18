@@ -1,0 +1,41 @@
+Source: ruby-excon
+Section: ruby
+Priority: optional
+Maintainer: Debian Ruby Team <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
+Uploaders: Pirate Praveen <praveen@debian.org>,
+           Utkarsh Gupta <utkarsh@debian.org>
+Build-Depends: debhelper-compat (= 13),
+               gem2deb (>= 1),
+               rake,
+               ruby-activesupport,
+               ruby-chronic,
+               ruby-delorean,
+               ruby-eventmachine,
+               ruby-open4,
+               ruby-rspec,
+               ruby-shindo,
+               ruby-sinatra,
+               ruby-webrick (>= 1.7~),
+               unicorn,
+               puma,
+               ruby-sinatra-contrib
+Standards-Version: 4.6.0
+Vcs-Git: https://salsa.debian.org/ruby-team/ruby-excon.git
+Vcs-Browser: https://salsa.debian.org/ruby-team/ruby-excon
+Homepage: https://github.com/excon/excon
+Testsuite: autopkgtest-pkg-ruby
+XS-Ruby-Versions: all
+Rules-Requires-Root: no
+
+Package: ruby-excon
+Architecture: all
+XB-Ruby-Versions: ${ruby:Versions}
+Depends: ${misc:Depends},
+         ${ruby:Depends},
+Recommends: ca-certificates
+Description: Ruby library for creating fast, persistent, HTTP(S) connections
+ Ruby library for creating fast HTTP(S) connections, it supports:
+  * GET/POST/PUT/DELETE/HEAD/TRACE/OPTIONS/CONNECT methods via HTTP/1.1
+  * HTTPS (SSL) connections
+  * Proxy and keep-alive connections
+  * Multitreading and streaming download

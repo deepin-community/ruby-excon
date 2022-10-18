@@ -1,0 +1,209 @@
+ruby-excon (0.88.0-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Update standards version to 4.5.1, no changes needed.
+
+  [ Antonio Terceiro ]
+  * New upstream version 0.88.0
+  * Bump Standards-Version to 4.6.0; no changes needed
+  * Refresh patches
+  * add missing Dependency on ruby-webrick
+  * Add patch to fix test with multiple ruby interpreters
+
+ -- Antonio Terceiro <terceiro@debian.org>  Tue, 02 Nov 2021 15:29:05 -0300
+
+ruby-excon (0.79.0-2) unstable; urgency=medium
+
+  * Team upload.
+  * Update test TLS certificates with long term validity to avoid
+    FTBFS (Closes: #987687).
+
+ -- Marc Dequènes (Duck) <Duck@DuckCorp.org>  Wed, 28 Apr 2021 14:22:46 +0900
+
+ruby-excon (0.79.0-1) unstable; urgency=medium
+
+  * Team upload
+
+  [ Debian Janitor ]
+  * Trim trailing whitespace.
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+
+  [ Cédric Boutillier ]
+  * Update team name
+  * Add .gitattributes to keep unwanted files out of the source package
+
+  [ Antonio Terceiro ]
+  * New upstream version 0.79.0
+  * Refresh packaging files with dh-make-ruby
+    - debian/control:
+      - order fields like dh-make-ruby does
+      - bump debhelper compat level to 13
+      - Drop explicit dependency on ruby, add ${ruby:Depends}
+    - debian/rules:
+      - drop old comments produced by old dh-make-ruby
+      - install using Rubygems layout
+  * Also run rspec tests, reusing upstream's Rakefile
+    - the upstream Rakefile is reasonable enough that we can just use it.
+    - add new build dependency, needed by test suite: puma
+  * debian/control: Depends: drop unused ${shlibs:Depends}
+  * debian/patches/04_gemspec-don-t-reference-lib-directory-explicitly.patch:
+    make dependency checking under autopkgtest work
+
+ -- Antonio Terceiro <terceiro@debian.org>  Sun, 07 Feb 2021 13:04:35 -0300
+
+ruby-excon (0.72.0-2) unstable; urgency=medium
+
+  * Reupload to unstable
+
+ -- Pirate Praveen <praveen@debian.org>  Mon, 30 Mar 2020 21:53:13 +0530
+
+ruby-excon (0.72.0-1) experimental; urgency=medium
+
+  [ Utkarsh Gupta ]
+  * Fix CVE number
+
+  [ Pirate Praveen ]
+  * Switch to github tarballs
+  * New upstream version 0.72.0
+  * Bump Standards-Version to 4.5.0 (no changes needed)
+  * Remove patches already applied upstream
+  * Upload to experimental because it causes FTBFS in ruby-vcr
+
+ -- Pirate Praveen <praveen@debian.org>  Thu, 06 Feb 2020 15:58:47 +0100
+
+ruby-excon (0.60.0-2) unstable; urgency=medium
+
+  * Add patch to fix leftover data with interrupted persistent
+    connections. (Fixes: CVE-2019-16779) (Closes: #946904)
+  * Add patch to update expired certs
+  * Refresh d/patches
+  * Fix package wrt cme
+  * Add salsa-ci.yml
+  * Move debian/watch to gemwatch.debian.net
+
+ -- Utkarsh Gupta <utkarsh@debian.org>  Sun, 19 Jan 2020 01:47:37 +0530
+
+ruby-excon (0.60.0-1) unstable; urgency=medium
+
+  * New upstream version 0.60.0
+  * Bump standards version to 4.1.3 and debhelper compat to 11
+
+ -- Pirate Praveen <praveen@debian.org>  Fri, 23 Feb 2018 20:40:31 +0530
+
+ruby-excon (0.54.0-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+
+ -- Micah Anderson <micah@debian.org>  Tue, 15 Nov 2016 09:23:26 -0500
+
+ruby-excon (0.49.0-2) unstable; urgency=medium
+
+  * Team upload
+  * New Build-Depends: ruby-sinatra-contrib
+  * Remove patches/04_disable-test-Excon-redirecting-with-cookie-preser.patch
+
+ -- Abhijith PA <abhijith@openmailbox.org>  Sun, 12 Jun 2016 20:57:00 +0530
+
+ruby-excon (0.49.0-1) unstable; urgency=medium
+
+  [ Abhijith PA ]
+  * Team upload
+  * New upstream release
+  * Bump Standards-Version to 3.9.8
+  * Refresh patches
+  * debian/patches/04_disable-test-Excon-redirecting-with-cookie-preser.patch:
+    Disabling a test
+
+  [ Laurent Bigonville ]
+  * Remove myself from the uploaders
+
+ -- Abhijith PA <abhijith@openmailbox.org>  Fri, 10 Jun 2016 13:32:58 +0530
+
+ruby-excon (0.45.1-2) unstable; urgency=medium
+
+  * Re-upload to unstable
+
+ -- Pirate Praveen <praveen@debian.org>  Tue, 28 Apr 2015 10:22:47 +0530
+
+ruby-excon (0.45.1-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Pirate Praveen <praveen@debian.org>  Fri, 10 Apr 2015 23:10:48 +0530
+
+ruby-excon (0.38.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Add myself to uploaders.
+  * Bump standards version to 3.9.6 (no changes).
+
+ -- Pirate Praveen <praveen@debian.org>  Sat, 22 Nov 2014 13:48:37 +0530
+
+ruby-excon (0.33.0-2) unstable; urgency=medium
+
+  * Team upload
+  * Skip local ports reuse tests (Closes: #751037)
+
+ -- Pirate Praveen <praveen@debian.org>  Fri, 27 Jun 2014 20:32:33 +0530
+
+ruby-excon (0.33.0-1) unstable; urgency=low
+
+  * Team upload
+  * New upstream release
+  * Add unicorn as build dep (Closes: 746079)
+
+ -- Pirate Praveen <praveen@debian.org>  Tue, 20 May 2014 15:01:06 +0530
+
+ruby-excon (0.32.1-1) unstable; urgency=low
+
+  * Team upload
+  * New upstream release
+  * Build dep on ruby-activesupport instead of ruby-activesupport-3.2
+
+ -- Pirate Praveen <praveen@debian.org>  Mon, 14 Apr 2014 10:58:32 +0530
+
+ruby-excon (0.31.0-1) unstable; urgency=low
+
+  * Team upload
+  * New upstream release
+  * Refresh patches
+  * Bump standards version to 3.9.5 (no changes)
+
+ -- Praveen Arimbrathodiyil <praveen@debian.org>  Tue, 14 Jan 2014 18:44:24 +0530
+
+ruby-excon (0.25.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 06 Jul 2013 23:48:43 +0200
+
+ruby-excon (0.21.0-1) unstable; urgency=low
+
+  * Team upload
+  * New upstream release
+  * std version bunped to 3.9.4
+  * Update build dependencies (gem2deb (>= 0.3.0~), rake, ruby-rspec,
+    ruby-chronic, ruby-shindo, ruby-sinatra, ruby-open4, ruby-activesupport,
+     ruby-delorean, ruby-eventmachine)
+  * debian/patches/02_remove_gemfile_lock.patch: Remove Gemfile.lock
+  * debian/patches/03_remove_rubygems_bundler_add_requires_from_gemspec.patch:
+    Remove rubygems and bundler, add require lines instead of Bundler.require
+
+ -- Praveen Arimbrathodiyil <praveen@debian.org>  Thu, 16 May 2013 20:49:12 +0530
+
+ruby-excon (0.13.4-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/patches/01_use_ca-certificates.patch: Use SSL certificates from
+    ca-certificates package
+  * debian/control: Recommends ca-certificates package
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 17 Apr 2012 17:46:25 +0200
+
+ruby-excon (0.10.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #647076)
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 07 Mar 2012 16:36:21 +0100

@@ -1,0 +1,13 @@
+Description: Skip local ports reuse tests
+Author: Pirate Praveen <praveen@debian.org>
+--- a/tests/basic_tests.rb
++++ b/tests/basic_tests.rb
+@@ -298,7 +298,7 @@ Shindo.tests('Excon basics (Unix socket)
+   end
+ end
+ 
+-Shindo.tests('Excon basics (reusable local port)') do
++Shindo.tests('Excon basics (reusable local port)', 'localportreuse') do
+   class CustomSocket < Socket
+     def initialize
+       super(AF_INET, SOCK_STREAM, 0)

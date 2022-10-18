@@ -1,0 +1,80 @@
+From 3a8a9bf69e8999fe7bb50e6779a121ac669f8ab3 Mon Sep 17 00:00:00 2001
+From: Antonio Terceiro <terceiro@debian.org>
+Date: Tue, 2 Nov 2021 13:51:48 -0300
+Subject: [PATCH 2/2] tests: ensure we always run the current Ruby interpreter
+
+In Debian, sometimes we have multiple Ruby interpreters installed at the
+same time, but only one of them is the default `ruby`. For example at
+the moment we are transitioning between ruby2.7 (the current default)
+and ruby3.0. When running the tests against ruby3.0, we want to ensure
+that everything else that starts a new Ruby interpreter starts ruby3.0,
+not the default `ruby`.
+---
+ lib/excon/test/plugin/server/puma.rb    | 2 +-
+ lib/excon/test/plugin/server/unicorn.rb | 2 ++
+ lib/excon/test/plugin/server/webrick.rb | 2 +-
+ tests/test_helper.rb                    | 6 +++---
+ 4 files changed, 7 insertions(+), 5 deletions(-)
+
+--- a/lib/excon/test/plugin/server/puma.rb
++++ b/lib/excon/test/plugin/server/puma.rb
+@@ -4,7 +4,7 @@ module Excon
+       module Server
+         module Puma
+           def start(app_str = app, bind_uri = bind)
+-            open_process('puma', '-b', bind_uri.to_s, app_str)
++            open_process(RbConfig.ruby, '-S', 'puma', '-b', bind_uri.to_s, app_str)
+             process_stderr = ""
+             line = ''
+             until line =~ /Use Ctrl-C to stop/
+--- a/lib/excon/test/plugin/server/unicorn.rb
++++ b/lib/excon/test/plugin/server/unicorn.rb
+@@ -13,6 +13,8 @@ module Excon
+               bind_str = "#{host}:#{bind_uri.port}"
+             end
+             args = [ 
++              RbConfig.ruby,
++              '-S',
+               'unicorn', 
+               '--no-default-middleware', 
+               '-l',
+--- a/lib/excon/test/plugin/server/webrick.rb
++++ b/lib/excon/test/plugin/server/webrick.rb
+@@ -7,7 +7,7 @@ module Excon
+             bind_uri = URI.parse(bind_uri) unless bind_uri.is_a? URI::Generic
+             host = bind_uri.host.gsub(/[\[\]]/, '')
+             port = bind_uri.port.to_s
+-            open_process('rackup', '-s', 'webrick', '--host', host, '--port', port, app_str)
++            open_process(RbConfig.ruby, '-S', 'rackup', '-s', 'webrick', '--host', host, '--port', port, app_str)
+             process_stderr = ""
+             line = ''
+             until line =~ /HTTPServer#start/
+--- a/tests/test_helper.rb
++++ b/tests/test_helper.rb
+@@ -254,7 +254,7 @@ def rackup_path(*parts)
+ end
+ 
+ def with_rackup(name, host="127.0.0.1")
+-  pid, w, r, e = launch_process("rackup", "-s", "webrick", "--host", host, rackup_path(name))
++  pid, w, r, e = launch_process(RbConfig.ruby, "-S", "rackup", "-s", "webrick", "--host", host, rackup_path(name))
+   process_stderr = ""
+   until (line = e.gets) =~ /HTTPServer#start:/
+     raise process_stderr if line.nil?
+@@ -283,7 +283,7 @@ end
+ def with_unicorn(name, listen='127.0.0.1:9292')
+   unless RUBY_PLATFORM == 'java'
+     unix_socket = listen.sub('unix://', '') if listen.start_with? 'unix://'
+-    pid, w, r, e = launch_process("unicorn", "--no-default-middleware","-l", listen, rackup_path(name))
++    pid, w, r, e = launch_process(RbConfig.ruby, "-S", "unicorn", "--no-default-middleware","-l", listen, rackup_path(name))
+     process_stderr = ""
+     until (line = e.gets) =~ /worker=0 ready/
+       raise process_stderr if line.nil?
+@@ -306,7 +306,7 @@ def server_path(*parts)
+ end
+ 
+ def with_server(name)
+-  pid, w, r, e = launch_process("ruby", server_path("#{name}.rb"))
++  pid, w, r, e = launch_process(RbConfig.ruby, server_path("#{name}.rb"))
+   process_stderr = ""
+   until (line = e.gets) =~ /ready/
+     raise process_stderr if line.nil?
